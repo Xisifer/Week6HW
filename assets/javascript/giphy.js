@@ -96,13 +96,18 @@
 
     var animal = $(this).attr("data-name");
 
+    // This is the secret sauce! The startPoint variable is a random whole number between 1 and 1000. With each 
+    // page displaying 10 gifs, this gives us a "random" pool of 100 different pages to pull from.
+    var startPoint = Math.floor(Math.random() * 1000);
+
     // ===================
     // This is our working Giphy API URL!!
     // =======================
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-      animal + "&api_key=dc6zaTOxFJmzC&limit=10";
+      animal + "&api_key=dc6zaTOxFJmzC&limit=10&offset=" + startPoint;
     // ==========================================================
 
+    
     $.ajax({
       url: queryURL,
       method: "GET"
