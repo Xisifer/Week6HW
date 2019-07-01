@@ -1,25 +1,25 @@
 // PSEUDOCODE!!
 
-// 1. Have a list of animals on the top of the page (an array??)
+// 1. Have a list of pictures on the top of the page (an array??)
     // MOVIE activity
 
-  var animalsArray = ["cat", "dog", "hamster", "bird", 
-  "rabbit", "goldfish", "turtle", "hedgehog", "lizard", 
-  "chameleon", "chicken", "goat", "mouse"];
+  var picturesArray = ["cat", "dog", "lizard", "Zelda", 
+  "Super Smash Bros", "Star Fox", "Metroid", "Star Wars", "Lightsaber", 
+  "Disney", "Pixar", "Batman", "Harley Quinn"];
 
 
 
-  // 2. When an animal button is clicked, it needs to:
+  // 2. When an picture button is clicked, it needs to:
     
     
     // 2c. Show the rating of each gif
       // MOVIE STAR Activity
   // 3. Each animated gif must start paused, can be clicked to animate, and click again to pause them
     // PAUSING GIFS Activity
-  // 4. Have an input box where the user can add an animal
-  // 5. When the animal is added...
+  // 4. Have an input box where the user can add an picture
+  // 5. When the picture is added...
     // 5a. The user's input appears as a button along the top of the page
-    // 5b. The user's input button is styled correctly (uses the .animalbutton class)
+    // 5b. The user's input button is styled correctly (uses the .picturebutton class)
 
 
       // Function for displaying data
@@ -27,26 +27,26 @@
 
 
         
-        // Deleting the animals prior to adding new animals
+        // Deleting the pictures prior to adding new pictures
         // (this is necessary otherwise we will have repeat buttons)
-        $("#animalButtonsList").empty();
+        $("#pictureButtonsList").empty();
 
-        // Looping through the array of animal
-        for (var i = 0; i < animalsArray.length; i++) {
+        // Looping through the array of picture
+        for (var i = 0; i < picturesArray.length; i++) {
 
-          // Then dynamicaly generating buttons for each animal in the array
+          // Then dynamicaly generating buttons for each picture in the array
           // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
           var a = $("<button>");
           // Adding a class
-          a.addClass("animalbutton");
+          a.addClass("picturebutton");
           // Added a data-attribute
-          a.attr("data-name", animalsArray[i]);
-            // Each of these buttons has an ID of animal-button
-          a.attr("id", "animal-button")
+          a.attr("data-name", picturesArray[i]);
+            // Each of these buttons has an ID of picture-button
+          a.attr("id", "picture-button")
             // Provided the initial button text
-          a.text(animalsArray[i]);
+          a.text(picturesArray[i]);
           // Added the button to the HTML
-          $("#animalButtonsList").append(a);
+          $("#pictureButtonsList").append(a);
 
 
           console.log("This is the end of the RenderButtons function.");
@@ -55,38 +55,29 @@
 
 
       // This function handles events where one button is clicked
-      $("#add-animal").on("click", function(event) {
+      $("#add-picture").on("click", function(event) {
         event.preventDefault();
 
         // This line grabs the input from the textbox
-        var animalInput = $("#animal-input").val().trim();
+        var pictureInput = $("#picture-input").val().trim();
 
-        // The animal from the textbox is then added to our array
-        animalsArray.push(animalInput);
+        // The picture from the textbox is then added to our array
+        picturesArray.push(pictureInput);
 
-        // Calling renderButtons which handles the processing of our animals array
+        // Calling renderButtons which handles the processing of our pictures array
         renderButtons();
       });
 
-
-  // Ask classmates and see if there's a way to return both multiple results, and all random.
-  // The Search API doesn't return Random
-  // The Random API doesn't return Multiples
-  // How do I return BOTH Randoms AND Multiples?
-  // Need a new API?
-  // Go to grocery store 10 times?
-  // Some other API solution?
-  // Check w/teacher.
 
   // 6. When the user-created button is clicked, it must behave exactly the same way as a pre-existing button from Step 2.
 
 
 
 
-  // Adding click event listeners to all elements with a class of "animalbutton"
-  $(document).on("click", ".animalbutton", function() {
+  // Adding click event listeners to all elements with a class of "picturebutton"
+  $(document).on("click", ".picturebutton", function() {
     // Debugging feedback
-    console.log("Animal Button has been clicked.");
+    console.log("picture Button has been clicked.");
 
     // 2a. Remove all previous gifs (if any exist)
     $("#gifs-appear-here").empty();
@@ -94,7 +85,7 @@
     console.log("gifs view is cleared.")
 
 
-    var animal = $(this).attr("data-name");
+    var picture = $(this).attr("data-name");
 
     // This is the secret sauce! The startPoint variable is a random whole number between 1 and 1000. With each 
     // page displaying 10 gifs, this gives us a "random" pool of 100 different pages to pull from.
@@ -104,7 +95,7 @@
     // This is our working Giphy API URL!!
     // =======================
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-      animal + "&api_key=dc6zaTOxFJmzC&limit=10&offset=" + startPoint;
+      picture + "&api_key=dc6zaTOxFJmzC&limit=10&offset=" + startPoint; 
     // ==========================================================
 
     
@@ -120,38 +111,37 @@
       for (var i = 0; i < results.length; i++) {
 
 
-        var animalDiv = $("<div>");
+        var pictureDiv = $("<div>");
 
         var p = $("<p>");
         p.text("Rating: " + results[i].rating);
 
-        var animalImage = $("<img>");
-        animalImage.attr("src", results[i].images.fixed_height_still.url);
+        var pictureImage = $("<img>");
+        pictureImage.attr("src", results[i].images.fixed_height_still.url);
 
         // gif class is added to the button, for the pausing framework to hook into.
-        animalImage.addClass("gif");
+        pictureImage.addClass("gif");
         console.log("gif class is added.");
 
 
         // Create an attribute called data-state, and store the Still value into it.
-        // data-state="still"
-        animalImage.attr("data-state", "still");
+        pictureImage.attr("data-state", "still");
 
 
         // Create the data-still state, and store the Still URL into it
-        animalImage.attr("data-still", results[i].images.fixed_height_still.url);
+        pictureImage.attr("data-still", results[i].images.fixed_height_still.url);
 
         // Create the data-animate state, and store the Animated URL into it
-        animalImage.attr("data-animate", results[i].images.fixed_height.url);
+        pictureImage.attr("data-animate", results[i].images.fixed_height.url);
 
 
-        // Creating a class for the animalDiv that contains each image+rating combo.
-        animalDiv.addClass("picHolder");
+        // Creating a class for the pictureDiv that contains each image+rating combo.
+        pictureDiv.addClass("picHolder");
 
 
-        animalDiv.prepend(p, animalImage);
+        pictureDiv.prepend(p, pictureImage);
 
-        $("#gifs-appear-here").prepend(animalDiv);
+        $("#gifs-appear-here").prepend(pictureDiv);
       }
 
       });
